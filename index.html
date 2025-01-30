@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Code, Hydrate, Repeat</title>
+  <style>
+    :root {
+      --background: transparent;
+      --bubble-bg: #26272b;
+      --text: #9fa2a7;
+      --highlight1: #56b273;
+      --highlight2: #b388dd;
+      --highlight3: #ff8750;
+      --highlight4: #01AD9B;
+    }
+
+    body {
+      overflow: hidden;
+      background-color: var(--background);
+      font-family: Arial, sans-serif;
+      color: var(--text);
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .speechbubble {
+      background-color: var(--bubble-bg);
+      color: var(--text);
+      padding: 15px 20px;
+      margin-left: 20px;
+      border-radius: 10px;
+      position: relative;
+      max-width: 400px;
+      opacity: 0;
+      transform: translateX(300px); /* Start off-screen to the left */
+      transition: opacity 0.5s, transform 0.6s ease-out; /* Transition for opacity and bounce */
+    }
+
+    .speechbubble.show {
+      opacity: 1;
+      transform: translateX(0); /* Move to the normal position */
+    }
+
+    .speechbubble:nth-child(2n)::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 20px;
+      border-width: 10px 10px 0 0;
+      border-style: solid;
+      border-color: var(--bubble-bg) transparent;
+      display: block;
+    }
+
+    .speechbubble:nth-child(2n+1)::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      right: 20px;
+      border-width: 10px 0 0 10px;
+      border-style: solid;
+      border-color: var(--bubble-bg) transparent;
+      display: block;
+    }
+
+    .speechbubble:nth-child(4n+1) {
+      border-left: 5px solid var(--highlight1);
+    }
+
+    .speechbubble:nth-child(4n+2) {
+      border-left: 5px solid var(--highlight4);
+    }
+
+    .speechbubble:nth-child(4n+3) {
+      border-left: 5px solid var(--highlight2);
+    }
+
+    .speechbubble:nth-child(4n+4) {
+      border-left: 5px solid var(--highlight3);
+    }
+
+    .username {
+      display: block;
+      font-style: italic;
+      text-align: left;
+      margin-top: 10px;
+    }
+
+    .close {
+      display: block;
+      font-style: italic;
+      text-align: right;
+      margin-top: 10px;
+      background-color: #01AD9B;
+      padding-left: 3px;
+      padding-right: 3px;
+      border-radius: 20%;
+      color: aliceblue;
+      cursor: pointer;
+    }
+
+    .icon {
+      width: 100px;
+      height: 100px;
+      border-radius: 6%;
+      object-fit: cover;
+      flex-shrink: 0;
+      opacity: 0;
+      transform: translateX(300px); /* Start off-screen to the left */
+      transition: opacity 0.5s, transform 0.6s ease-out; /* Transition for opacity and bounce */
+    }
+
+    .icon.show {
+      opacity: 1;
+      transform: translateX(0); /* Move to the normal position */
+    }
+
+    .bottomdetail {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+
+    .bubble-container {
+      display: flex;
+      flex-direction: column;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <img src="storage/photos/prototype3.jpeg" alt="ayang?" class="icon" id="animeImage">
+    <div class="bubble-container speechbubble" id="bubble">
+      <div id="breakTimeMessage"></div>
+      <div class="bottomdetail">
+        <span class="username">Eula Lawrence -</span>
+        <span class="close" id="closeBubble">x</span>
+      </div>
+    </div>
+  </div>
+
+  <audio id="introSound" src="storage/audio/ringtone.wav" preload="auto"></audio>
+  <audio id="outroSound" src="storage/audio/ringtone2.wav" preload="auto"></audio>
+
+  <script>
+    const bubble = document.getElementById('bubble');
+    const breakTimeMessage = document.getElementById('breakTimeMessage');
+    const closeBubble = document.getElementById('closeBubble');
+    const animeImage = document.getElementById('animeImage');
+
+    const introSound = document.getElementById('introSound'); 
+    introSound.volume = 0.5;
+
+    const outroSound = document.getElementById('outroSound');
+    outroSound.volume = 0.1;
+
+
+    // Array of pre-prepared messages
+    const messages = [
+      "Hydration is key, now take a break. The bugs aren’t running away, but your brain needs a rest",
+      "Feeling tired? No, it’s not burnout. You’re just thirsty. Drink up and conquer!",
+      "Programming powers on, hydration fuels you through. Don’t forget to refill, or productivity will do a nosedive!",
+      "Why do programmers enjoy hydrating? Because they need to stay fluid-dynamic in their code!",
+      "Coding’s like solving puzzles, but hydration’s no joke. A well-rested mind finds solutions without a smoke",
+      "Caffeine fuels your code sprints, but don’t forget your H2O-powered energy",
+      "Hydrate and code all you want, but my gaze is on you. Don’t forget to take a break every now and then for me.",
+      "Programming may keep you busy, but I’d rather keep you busy for a different reason. Drink up and take a break, so you can give me some attention.",
+      "Hydration’s important, but what’s even more important is the thought of you. Stay hydrated and think of me.",
+      "Coding with your eyes on the screen is good, but I'd rather have them on me.",
+      "Ahh, work getting a bit overwhelming? Just the thought of me should be enough to keep you going through it all.",
+      "Every time you take a break, I want to be the first thing you think about",
+      "You might code alone, but I’m here, waiting for you, yearning for your attention",
+    ];
+
+    // Function to show a random message
+    const showMessage = () => {
+      const randomIndex = Math.floor(Math.random() * messages.length);
+      breakTimeMessage.textContent = messages[randomIndex];
+      bubble.classList.add('show');
+      animeImage.classList.add('show');
+      introSound.play();
+
+      console.log("success")
+
+      // Hide the bubble and image after 10 seconds
+      setTimeout(() => {
+        outroSound.play();
+        bubble.classList.remove('show');
+        animeImage.classList.remove('show');
+      }, 10000);
+    };
+
+    // Automatically trigger the message every 20 seconds
+    setInterval(showMessage, 20000);
+
+    // Close button functionality
+    closeBubble.addEventListener('click', () => {
+      outroSound.play();
+      bubble.classList.remove('show');
+      animeImage.classList.remove('show');
+      introSound.pause(); 
+      introSound.currentTime = 0; 
+    });
+
+  </script>
+</body>
+
+</html>
