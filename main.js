@@ -1,30 +1,101 @@
-const { app, BrowserWindow, screen } = require('electron');
+const { app, BrowserWindow, screen, ipcMain } = require('electron');
 const path = require('path');
 
 let mainWindow;
+let displayWindow;
 
-app.on('ready', () => {
-  // Get the current display size (primary screen)
+ipcMain.on('resize-window', (event, { width, height }) => {
+  if (displayWindow) {
+    displayWindow.setContentSize(width, height);
+    displayWindow.center(); // recenters the window after resize
+    displayWindow.show(); // make sure to show after size is set
+  }
+});
+
+ipcMain.on('minimize-window', () => {
+  displayWindow.minimize();
+});
+
+ipcMain.on('close-window', () => {
+  displayWindow.close();
+});
+
+function createDisplayWindow() {
+  // const { width, height } = screen.getPrimaryDisplay().bounds;
+
+  displayWindow = new BrowserWindow({
+    width:404,
+    height:294,
+    center: true,
+    frame: false,
+    transparent: true,
+    alwaysOnTop: false,
+    hasShadow: false,
+    show: false,
+    skipTaskbar: false,
+    icon: path.join(__dirname, '/storage/assets/windowsicon.ico'),
+    webPreferences: {
+      preload: path.join(__dirname, 'preload.js'),
+      nodeIntegration: false,
+      contextIsolation: true,
+      sandbox: false, // still chill unless you want extra security
+    },
+  });
+  
+
+  displayWindow.loadFile('display.html')
+  
+  displayWindow.webContents.openDevTools({ mode: 'detach' });
+  
+  displayWindow.show();
+  
+}
+
+function createMainWindow() {
   const { width, height } = screen.getPrimaryDisplay().workAreaSize;
 
   mainWindow = new BrowserWindow({
-    width: 600, // Window width
-    height: 150, // Window height
-    x: width - 620, // Position the window at the right side (400px width + 20px margin)
-    y: 20, // Position from the top edge (20px margin)
-    icon:path.join(__dirname,'/storage/assets/windowsicon.ico'),
+    width: 600,
+    height: 150,
+    x: width - 620,
+    y: 20,
+    icon: path.join(__dirname, '/storage/assets/windowsicon.ico'),
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
-      nodeIntegration: true,
-      contextIsolation: false,
+      nodeIntegration: false,
+      contextIsolation: true,
+      sandbox: false,
     },
-    frame: false, // Optional: Remove the default window frame
-    alwaysOnTop: true, // Keep the window always on top
-    transparent: true, // Make the window transparent
+    frame: false,
+    alwaysOnTop: true,
+    transparent: true,
+    hasShadow: false,
   });
 
-  // Load the HTML file
-  mainWindow.loadFile('index.html');
+  mainWindow.loadFile('index.html').then(() => {
+    mainWindow.setIgnoreMouseEvents(true, { forward: true });
+  });
+
+  mainWindow.webContents.openDevTools({ mode: 'detach' });
+}
+
+app.on('ready', () => {
+  createDisplayWindow();
+});
+
+// Handle interaction from displayWindow
+ipcMain.on('display-form-submitted', (event, formData) => {
+  console.log('Form submitted:', formData); // you can use formData if needed
+  if (displayWindow) {
+    displayWindow.close();
+  }
+  createMainWindow();
+});
+
+ipcMain.on('set-ignore-mouse-events', (event, ignore) => {
+  if (mainWindow) {
+    mainWindow.setIgnoreMouseEvents(ignore, { forward: true });
+  }
 });
 
 app.on('window-all-closed', () => {
@@ -35,6 +106,6 @@ app.on('window-all-closed', () => {
 
 app.on('activate', () => {
   if (BrowserWindow.getAllWindows().length === 0) {
-    createWindow();
+    createDisplayWindow();
   }
 });

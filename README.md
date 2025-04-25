@@ -1,11 +1,4 @@
-<!--
-Hey, thanks for using the awesome-readme-template template.  
-If you have any enhancements, then fork this project and create a pull request 
-or just open an issue with the label "enhancement".
 
-Don't forget to give this project a star for additional support ;)
-Maybe you can mention me or this repo in the acknowledgements too
--->
 <div align="center">
 
   <img src="assets/logo.png" alt="logo" width="200" height="auto" />
@@ -269,7 +262,7 @@ See `contributing.md` for ways to get started.
 <!-- Code of Conduct -->
 ### :scroll: Code of Conduct
 
-Please read the [Code of Conduct](https://github.com/Louis3797/awesome-readme-template/blob/master/CODE_OF_CONDUCT.md)
+Please read the [Code of Conduct](https://example.com)
 
 <!-- FAQ -->
 ## :grey_question: FAQ

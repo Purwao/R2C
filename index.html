@@ -29,6 +29,7 @@
     }
 
     .container {
+      
       position: relative;
       display: flex;
       align-items: center;
@@ -43,13 +44,16 @@
       position: relative;
       max-width: 400px;
       opacity: 0;
-      transform: translateX(300px); /* Start off-screen to the left */
-      transition: opacity 0.5s, transform 0.6s ease-out; /* Transition for opacity and bounce */
+      transform: translateX(300px);
+      /* Start off-screen to the left */
+      transition: opacity 0.5s, transform 0.6s ease-out;
+      /* Transition for opacity and bounce */
     }
 
     .speechbubble.show {
       opacity: 1;
-      transform: translateX(0); /* Move to the normal position */
+      transform: translateX(0);
+      /* Move to the normal position */
     }
 
     .speechbubble:nth-child(2n)::after {
@@ -102,7 +106,7 @@
       font-style: italic;
       text-align: right;
       margin-top: 10px;
-      background-color: #01AD9B;
+      /* background-color: #01AD9B; */
       padding-left: 3px;
       padding-right: 3px;
       border-radius: 20%;
@@ -117,13 +121,16 @@
       object-fit: cover;
       flex-shrink: 0;
       opacity: 0;
-      transform: translateX(300px); /* Start off-screen to the left */
-      transition: opacity 0.5s, transform 0.6s ease-out; /* Transition for opacity and bounce */
+      transform: translateX(300px);
+      /* Start off-screen to the left */
+      transition: opacity 0.5s, transform 0.6s ease-out;
+      /* Transition for opacity and bounce */
     }
 
     .icon.show {
       opacity: 1;
-      transform: translateX(0); /* Move to the normal position */
+      transform: translateX(0);
+      /* Move to the normal position */
     }
 
     .bottomdetail {
@@ -141,7 +148,7 @@
 
 <body>
   <div class="container">
-    <img src="storage/photos/prototype3.jpeg" alt="ayang?" class="icon" id="animeImage">
+    <img src="anime_girl.png" alt="ayang?" class="icon" id="animeImage">
     <div class="bubble-container speechbubble" id="bubble">
       <div id="breakTimeMessage"></div>
       <div class="bottomdetail">
@@ -159,15 +166,12 @@
     const breakTimeMessage = document.getElementById('breakTimeMessage');
     const closeBubble = document.getElementById('closeBubble');
     const animeImage = document.getElementById('animeImage');
-
-    const introSound = document.getElementById('introSound'); 
-    introSound.volume = 0.5;
-
+    const introSound = document.getElementById('introSound');
     const outroSound = document.getElementById('outroSound');
+  
+    introSound.volume = 0.5;
     outroSound.volume = 0.1;
-
-
-    // Array of pre-prepared messages
+  
     const messages = [
       "Hydration is key, now take a break. The bugs aren’t running away, but your brain needs a rest",
       "Feeling tired? No, it’s not burnout. You’re just thirsty. Drink up and conquer!",
@@ -183,38 +187,124 @@
       "Every time you take a break, I want to be the first thing you think about",
       "You might code alone, but I’m here, waiting for you, yearning for your attention",
     ];
-
-    // Function to show a random message
-    const showMessage = () => {
+  
+    let imgdisplay = [];
+    let isManuallyClosed = false;
+  
+    window.addEventListener('DOMContentLoaded', () => {
+      // Load image paths from preload
+      if (window.electronAPI?.getImages) {
+        const images = window.electronAPI.getImages();
+        if (Array.isArray(images)) {
+          imgdisplay = images;
+          console.log("Loaded images:", imgdisplay);
+        } else {
+          console.error("getImages() did not return an array!");
+        }
+      } else {
+        console.error("electronAPI.getImages is not defined");
+      }
+  
+      // Start automatic bubble timer after DOM + images are ready
+      setInterval(showMessage, 20000);
+    });
+  
+    function getRightEdgeColor(imgElement, callback) {
+      const canvas = document.createElement("canvas");
+      const ctx = canvas.getContext("2d");
+  
+      canvas.width = imgElement.naturalWidth;
+      canvas.height = imgElement.naturalHeight;
+  
+      ctx.drawImage(imgElement, 0, 0, canvas.width, canvas.height);
+  
+      const stripWidth = 5;
+      const imageData = ctx.getImageData(canvas.width - stripWidth, 0, stripWidth, canvas.height);
+      const data = imageData.data;
+  
+      let r = 0, g = 0, b = 0, count = 0;
+      for (let i = 0; i < data.length; i += 4) {
+        r += data[i];
+        g += data[i + 1];
+        b += data[i + 2];
+        count++;
+      }
+  
+      r = Math.round(r / count);
+      g = Math.round(g / count);
+      b = Math.round(b / count);
+  
+      callback(`rgb(${r}, ${g}, ${b})`);
+    }
+  
+    function showMessage() {
+      isManuallyClosed = false;
+  
+      // Electron API safety check
+      if (window.electronAPI?.setMouseThrough) {
+        window.electronAPI.setMouseThrough(false);
+      }
+  
+      const randomImgIndex = Math.floor(Math.random() * imgdisplay.length);
+      const imgPath = imgdisplay[randomImgIndex] || ''; // fallback if empty
+  
+      animeImage.src = imgPath;
+      animeImage.alt = imgPath;
+  
       const randomIndex = Math.floor(Math.random() * messages.length);
       breakTimeMessage.textContent = messages[randomIndex];
       bubble.classList.add('show');
+  
+      animeImage.onload = () => {
+        getRightEdgeColor(animeImage, (color) => {
+          bubble.style.borderLeft = `5px solid ${color}`;
+        });
+      };
+  
       animeImage.classList.add('show');
       introSound.play();
-
-      console.log("success")
-
-      // Hide the bubble and image after 10 seconds
+  
       setTimeout(() => {
-        outroSound.play();
-        bubble.classList.remove('show');
-        animeImage.classList.remove('show');
+        if (!isManuallyClosed) {
+          introSound.pause();
+          introSound.currentTime = 0;
+  
+          outroSound.pause();
+          outroSound.currentTime = 0;
+          outroSound.play();
+  
+          bubble.classList.remove('show');
+          animeImage.classList.remove('show');
+  
+          if (window.electronAPI?.setMouseThrough) {
+            window.electronAPI.setMouseThrough(true);
+          }
+        }
       }, 10000);
-    };
-
-    // Automatically trigger the message every 20 seconds
-    setInterval(showMessage, 20000);
-
-    // Close button functionality
+    }
+  
     closeBubble.addEventListener('click', () => {
+      isManuallyClosed = true;
+  
+      introSound.pause();
+      introSound.currentTime = 0;
+  
+      outroSound.pause();
+      outroSound.currentTime = 0;
       outroSound.play();
+  
       bubble.classList.remove('show');
       animeImage.classList.remove('show');
-      introSound.pause(); 
-      introSound.currentTime = 0; 
+  
+      if (window.electronAPI?.setMouseThrough) {
+        window.electronAPI.setMouseThrough(true);
+      }
     });
 
+    console.log("electronAPI:", window.electronAPI);
+
   </script>
+  
 </body>
 
 </html>
