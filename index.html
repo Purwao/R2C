@@ -191,6 +191,10 @@
     let imgdisplay = [];
     let isManuallyClosed = false;
   
+    window.electronAPI.onCharacterData((data)=>{
+      console.log(data);
+    })
+
     window.addEventListener('DOMContentLoaded', () => {
       // Load image paths from preload
       if (window.electronAPI?.getImages) {
