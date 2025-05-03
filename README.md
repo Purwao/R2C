@@ -299,3 +299,10 @@ Use this section to mention useful resources and libraries that you have used in
  - [Awesome README](https://github.com/matiassingers/awesome-readme)
  - [Emoji Cheat Sheet](https://github.com/ikatyang/emoji-cheat-sheet/blob/master/README.md#travel--places)
  - [Readme Template](https://github.com/othneildrew/Best-README-Template)
+
+
+tambahin audio kata bang rafli(ty for the readme template btw)
+still go no time for readmemd
+
+log:
+v1.3.1: i add dynamic input for name and dialogues

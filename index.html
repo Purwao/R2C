@@ -6,154 +6,144 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Code, Hydrate, Repeat</title>
   <style>
-    :root {
-      --background: transparent;
-      --bubble-bg: #26272b;
-      --text: #9fa2a7;
-      --highlight1: #56b273;
-      --highlight2: #b388dd;
-      --highlight3: #ff8750;
-      --highlight4: #01AD9B;
-    }
+   :root {
+    --background: transparent;
+--bubble-bg: #26272b;
+--text: #9fa2a7;
+--highlight1: #56b273;
+--highlight2: #b388dd;
+--highlight3: #ff8750;
+--highlight4: #01AD9B;
 
-    body {
-      overflow: hidden;
-      background-color: var(--background);
-      font-family: Arial, sans-serif;
-      color: var(--text);
-      margin: 0;
-      padding: 20px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
+}
 
-    .container {
-      
-      position: relative;
-      display: flex;
-      align-items: center;
-    }
+body {
+  overflow: hidden;
+  background-color: var(--background);
+  font-family: Arial, sans-serif;
+  color: var(--text);
+  margin: 0;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-    .speechbubble {
-      background-color: var(--bubble-bg);
-      color: var(--text);
-      padding: 15px 20px;
-      margin-left: 20px;
-      border-radius: 10px;
-      position: relative;
-      max-width: 400px;
-      opacity: 0;
-      transform: translateX(300px);
-      /* Start off-screen to the left */
-      transition: opacity 0.5s, transform 0.6s ease-out;
-      /* Transition for opacity and bounce */
-    }
+.container {
+  position: relative;
+  width: 100dvw;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  gap: 20px;
+}
 
-    .speechbubble.show {
-      opacity: 1;
-      transform: translateX(0);
-      /* Move to the normal position */
-    }
+.speechbubble {
+  background-color: var(--bubble-bg);
+  color: var(--text);
+  padding: 20px;
+  border-radius: 12px;
+  position: relative;
+  max-width: 400px;
+  opacity: 0;
+  transform: translateX(300px);
+  transition: opacity 0.5s, transform 0.6s ease-out;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
 
-    .speechbubble:nth-child(2n)::after {
-      content: '';
-      position: absolute;
-      bottom: -10px;
-      left: 20px;
-      border-width: 10px 10px 0 0;
-      border-style: solid;
-      border-color: var(--bubble-bg) transparent;
-      display: block;
-    }
+.speechbubble.show {
+  opacity: 1;
+  transform: translateX(0);
+}
 
-    .speechbubble:nth-child(2n+1)::after {
-      content: '';
-      position: absolute;
-      bottom: -10px;
-      right: 20px;
-      border-width: 10px 0 0 10px;
-      border-style: solid;
-      border-color: var(--bubble-bg) transparent;
-      display: block;
-    }
+.speechbubble::after {
+  content: '';
+  position: absolute;
+  left: -10px;
+  top: 30px;
+  border-width: 10px;
+  border-style: solid;
+  border-color: transparent var(--bubble-bg) transparent transparent;
+}
 
-    .speechbubble:nth-child(4n+1) {
-      border-left: 5px solid var(--highlight1);
-    }
+.speechbubble:nth-child(4n+1) {
+  border-left: 5px solid var(--highlight1);
+}
+.speechbubble:nth-child(4n+2) {
+  border-left: 5px solid var(--highlight4);
+}
+.speechbubble:nth-child(4n+3) {
+  border-left: 5px solid var(--highlight2);
+}
+.speechbubble:nth-child(4n+4) {
+  border-left: 5px solid var(--highlight3);
+}
 
-    .speechbubble:nth-child(4n+2) {
-      border-left: 5px solid var(--highlight4);
-    }
+.username {
+  font-style: italic;
+  font-size: 0.9em;
+  color: #ccc;
+  margin-top: 8px;
+}
 
-    .speechbubble:nth-child(4n+3) {
-      border-left: 5px solid var(--highlight2);
-    }
+#breakTimeMessage {
+  font-size: 1rem;
+  line-height: 1.4;
+}
 
-    .speechbubble:nth-child(4n+4) {
-      border-left: 5px solid var(--highlight3);
-    }
+.close {
+  font-size: 1rem;
+  padding: 2px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  color: #ccc;
+  transition: background-color 0.2s;
+}
 
-    .username {
-      display: block;
-      font-style: italic;
-      text-align: left;
-      margin-top: 10px;
-    }
+.close:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
 
-    .close {
-      display: block;
-      font-style: italic;
-      text-align: right;
-      margin-top: 10px;
-      /* background-color: #01AD9B; */
-      padding-left: 3px;
-      padding-right: 3px;
-      border-radius: 20%;
-      color: aliceblue;
-      cursor: pointer;
-    }
+.icon {
+  width: 100px;
+  height: 100px;
+  border-radius: 10px;
+  object-fit: cover;
+  flex-shrink: 0;
+  opacity: 0;
+  transform: translateX(300px);
+  transition: opacity 0.5s, transform 0.6s ease-out;
+}
 
-    .icon {
-      width: 100px;
-      height: 100px;
-      border-radius: 6%;
-      object-fit: cover;
-      flex-shrink: 0;
-      opacity: 0;
-      transform: translateX(300px);
-      /* Start off-screen to the left */
-      transition: opacity 0.5s, transform 0.6s ease-out;
-      /* Transition for opacity and bounce */
-    }
+.icon.show {
+  opacity: 1;
+  transform: translateX(0);
+}
 
-    .icon.show {
-      opacity: 1;
-      transform: translateX(0);
-      /* Move to the normal position */
-    }
+.bottomdetail {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}
 
-    .bottomdetail {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-    }
+.bubble-container {
+  min-width: 50%;
+  display: flex;
+  flex-direction: column;
+}
 
-    .bubble-container {
-      display: flex;
-      flex-direction: column;
-    }
   </style>
 </head>
 
 <body>
   <div class="container">
     <img src="anime_girl.png" alt="ayang?" class="icon" id="animeImage">
-    <div class="bubble-container speechbubble" id="bubble">
+    <div class="bubble-container speechbubble" id="bubble" role="dialog" aria-label="Break Reminder">
       <div id="breakTimeMessage"></div>
       <div class="bottomdetail">
-        <span class="username">Eula Lawrence -</span>
-        <span class="close" id="closeBubble">x</span>
+        <span class="username" id="username"></span>
+        <span class="close" id="closeBubble" title="Close message" aria-label="Close">×</span>
       </div>
     </div>
   </div>
@@ -172,7 +162,7 @@
     introSound.volume = 0.5;
     outroSound.volume = 0.1;
   
-    const messages = [
+    let messages = [
       "Hydration is key, now take a break. The bugs aren’t running away, but your brain needs a rest",
       "Feeling tired? No, it’s not burnout. You’re just thirsty. Drink up and conquer!",
       "Programming powers on, hydration fuels you through. Don’t forget to refill, or productivity will do a nosedive!",
@@ -193,6 +183,9 @@
   
     window.electronAPI.onCharacterData((data)=>{
       console.log(data);
+      console.log(data.dialogues)
+      messages=data.dialogues;
+      document.getElementById('username').innerHTML=titleCase(data.name) + " ~";
     })
 
     window.addEventListener('DOMContentLoaded', () => {
@@ -213,6 +206,16 @@
       setInterval(showMessage, 20000);
     });
   
+    function titleCase(str) {
+   var splitStr = str.toLowerCase().split(' ');
+   for (var i = 0; i < splitStr.length; i++) {
+      
+       splitStr[i] = splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);     
+   }
+
+   return splitStr.join(' '); 
+}
+
     function getRightEdgeColor(imgElement, callback) {
       const canvas = document.createElement("canvas");
       const ctx = canvas.getContext("2d");
@@ -256,7 +259,7 @@
       animeImage.alt = imgPath;
   
       const randomIndex = Math.floor(Math.random() * messages.length);
-      breakTimeMessage.textContent = messages[randomIndex];
+      breakTimeMessage.textContent = `"`+messages[randomIndex]+`"`;
       bubble.classList.add('show');
   
       animeImage.onload = () => {

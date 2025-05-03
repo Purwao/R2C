@@ -38,7 +38,7 @@
     }
 
     .custom-titlebar {
-      -webkit-app-region:drag;
+      -webkit-app-region: drag;
       width: 100dvw;
       height: 35px;
       background-color: #1e293b;
@@ -52,7 +52,7 @@
     }
 
     .window-controls {
-      -webkit-app-region:no-drag;
+      -webkit-app-region: no-drag;
       display: flex;
       gap: 0.5em;
     }
@@ -234,15 +234,13 @@
       </div>
 
       <!-- Row 3: File Input -->
-    
+
       <div class="full">
-        <label for="characterImages">Upload Images 
+        <label for="characterImages">Upload Images
           <span style="color: var(--placeholder); font-weight: small;">(optional)</span>
         </label>
         <input type="file" id="characterImages" accept="image/*" multiple />
       </div>
-
-
       <!-- Row 4: File Preview -->
       <div class="full">
         <label>Preview</label>
@@ -291,41 +289,40 @@
     }
 
     document.getElementById('characterForm').addEventListener('submit', async (e) => {
-        e.preventDefault();
+      e.preventDefault();
 
-        const name = document.getElementById('characterName').value.trim();
-        const dialogues = document.getElementById('dialogueArray').value
-          .split('\n').map(d => d.trim()).filter(Boolean);
-        const minutes = document.getElementById('minutes').value;
-        const seconds = document.getElementById('seconds').value;
+      const name = document.getElementById('characterName').value.trim();
+      const dialogues = document.getElementById('dialogueArray').value
+        .split('\n').map(d => d.trim()).filter(Boolean);
+      const minutes = document.getElementById('minutes').value;
+      const seconds = document.getElementById('seconds').value;
 
-        if (!name || !dialogues.length || !minutes || !seconds) {
-          alert('Please fill out all fields.');
-          return;
-        }
+      if (!name || !dialogues.length || !minutes || !seconds) {
+        alert('Please fill out all fields.');
+        return;
+      }
 
-        const timer = `${minutes}:${seconds}`;
+      const timer = `${minutes}:${seconds}`;
 
-        const filesWithData = await Promise.all(selectedFiles.map(file => {
-          return new Promise((resolve) => {
-            const reader = new FileReader();
-            reader.onload = () => resolve({ name: file.name, dataUrl: reader.result });
-            reader.readAsDataURL(file);
-          });
-        }));
+      const filesWithData = await Promise.all(selectedFiles.map(file => {
+        return new Promise((resolve) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve({ name: file.name, dataUrl: reader.result });
+          reader.readAsDataURL(file);
+        });
+      }));
 
-        window.electronAPI.saveFiles(filesWithData);
+      window.electronAPI.saveFiles(filesWithData);
 
-        await window.electronAPI.submitCharacterData({
-          name,
-          dialogues,
-          minutes,
-          seconds,
-     });
-
-        alert("Character data submitted!");
-     
+      await window.electronAPI.submitCharacterData({
+        name,
+        dialogues,
+        minutes,
+        seconds,
       });
+
+      window.electronAPI.close();
+    });
 
 
     // Minimize and Close Buttons
