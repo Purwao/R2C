@@ -147,4 +147,4 @@ No warranties are provided. Use at your own risk.
 ### ✍️ Author
 Developed with 💻 and ❤️ by **[Purwa]**  
 🔗 [Your GitHub](https://github.com/Purwao)  
-📧 Contact: purwaarda51@example.com
+📧 Contact: purwaarda51@gmail.com
