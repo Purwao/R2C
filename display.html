@@ -210,7 +210,6 @@
   </div>
   <div class="window">
     <form id="characterForm" class="full">
-      <!-- Row 1: Character Name + Timer -->
       <div class="row">
         <div class="two-thirds">
           <label for="characterName">Character Name</label>
@@ -218,7 +217,6 @@
         </div>
         <div class="one-third">
           <label for="bubbleTimer">Timer</label>
-          <!-- Replace time input with two number inputs -->
           <div class="row">
             <input type="number" id="minutes" placeholder="Min" min="0" max="59" required />
             <span style="font-size: xx-large;">:</span>
@@ -226,28 +224,20 @@
           </div>
         </div>
       </div>
-
-      <!-- Row 2: Dialogue -->
       <div class="full">
         <label for="dialogueArray">Dialogues</label>
         <textarea id="dialogueArray" placeholder="One line per dialogue" required></textarea>
       </div>
-
-      <!-- Row 3: File Input -->
-
       <div class="full">
         <label for="characterImages">Upload Images
           <span style="color: var(--placeholder); font-weight: small;">(optional)</span>
         </label>
         <input type="file" id="characterImages" accept="image/*" multiple />
       </div>
-      <!-- Row 4: File Preview -->
       <div class="full">
         <label>Preview</label>
         <div id="filePreview"></div>
       </div>
-
-      <!-- Row 5: Submit -->
       <div class="full">
         <button type="submit">Submit</button>
       </div>
@@ -255,86 +245,94 @@
   </div>
 
   <script>
-    const fileInput = document.getElementById('characterImages');
-    const previewContainer = document.getElementById('filePreview');
-    let selectedFiles = [];
+// === DOM Elements and State ===
+const fileInput = document.getElementById('characterImages');
+const previewContainer = document.getElementById('filePreview');
+let selectedFiles = [];
 
-    fileInput.addEventListener('change', (e) => {
-      selectedFiles = Array.from(e.target.files);
+
+// === Handle File Selection & Preview ===
+// When files are selected, store them and render previews
+fileInput.addEventListener('change', (e) => {
+  selectedFiles = Array.from(e.target.files);
+  renderPreviews();
+});
+
+// Generate image previews with remove buttons
+function renderPreviews() {
+  previewContainer.innerHTML = '';
+  selectedFiles.forEach((file, index) => {
+    const fileItem = document.createElement('div');
+    fileItem.className = 'file-item';
+
+    const img = document.createElement('img');
+    img.src = URL.createObjectURL(file);
+    img.onload = () => URL.revokeObjectURL(img.src);
+    fileItem.appendChild(img);
+
+    const removeBtn = document.createElement('button');
+    removeBtn.textContent = '×';
+    removeBtn.className = 'file-remove';
+    removeBtn.onclick = () => {
+      selectedFiles.splice(index, 1);
       renderPreviews();
+    };
+
+    fileItem.appendChild(removeBtn);
+    previewContainer.appendChild(fileItem);
+  });
+}
+
+
+// === Handle Form Submission ===
+// Validate fields, convert images to base64, send data to main process
+document.getElementById('characterForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  const name = document.getElementById('characterName').value.trim();
+  const dialogues = document.getElementById('dialogueArray').value
+    .split('\n').map(d => d.trim()).filter(Boolean);
+  const minutes = document.getElementById('minutes').value;
+  const seconds = document.getElementById('seconds').value;
+
+  if (!name || !dialogues.length || !minutes || !seconds) {
+    alert('Please fill out all fields.');
+    return;
+  }
+
+  const filesWithData = await Promise.all(selectedFiles.map(file => {
+    return new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve({ name: file.name, dataUrl: reader.result });
+      reader.readAsDataURL(file);
     });
+  }));
 
-    function renderPreviews() {
-      previewContainer.innerHTML = '';
-      selectedFiles.forEach((file, index) => {
-        const fileItem = document.createElement('div');
-        fileItem.className = 'file-item';
+  window.electronAPI.saveFiles(filesWithData);
 
-        const img = document.createElement('img');
-        img.src = URL.createObjectURL(file);
-        img.onload = () => URL.revokeObjectURL(img.src);
-        fileItem.appendChild(img);
+  await window.electronAPI.submitCharacterData({
+    name,
+    dialogues,
+    minutes,
+    seconds,
+  });
 
-        const removeBtn = document.createElement('button');
-        removeBtn.textContent = '×';
-        removeBtn.className = 'file-remove';
-        removeBtn.onclick = () => {
-          selectedFiles.splice(index, 1);
-          renderPreviews();
-        };
-
-        fileItem.appendChild(removeBtn);
-        previewContainer.appendChild(fileItem);
-      });
-    }
-
-    document.getElementById('characterForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-
-      const name = document.getElementById('characterName').value.trim();
-      const dialogues = document.getElementById('dialogueArray').value
-        .split('\n').map(d => d.trim()).filter(Boolean);
-      const minutes = document.getElementById('minutes').value;
-      const seconds = document.getElementById('seconds').value;
-
-      if (!name || !dialogues.length || !minutes || !seconds) {
-        alert('Please fill out all fields.');
-        return;
-      }
-
-      const timer = `${minutes}:${seconds}`;
-
-      const filesWithData = await Promise.all(selectedFiles.map(file => {
-        return new Promise((resolve) => {
-          const reader = new FileReader();
-          reader.onload = () => resolve({ name: file.name, dataUrl: reader.result });
-          reader.readAsDataURL(file);
-        });
-      }));
-
-      window.electronAPI.saveFiles(filesWithData);
-
-      await window.electronAPI.submitCharacterData({
-        name,
-        dialogues,
-        minutes,
-        seconds,
-      });
-
-      window.electronAPI.close();
-    });
+  window.electronAPI.close();
+});
 
 
-    // Minimize and Close Buttons
-    document.getElementById('minimize').addEventListener('click', () => {
-      window.electronAPI.minimize();
-      console.log("Minimize clicked");
-    });
+// === Window Control Buttons ===
+// Hook up minimize and close actions
+document.getElementById('minimize').addEventListener('click', () => {
+  window.electronAPI.minimize();
+  console.log("Minimize clicked");
+});
 
-    document.getElementById('close').addEventListener('click', () => {
-      window.electronAPI.close();
-      console.log("Close clicked");
-    });
+document.getElementById('close').addEventListener('click', () => {
+  window.electronAPI.close();
+  console.log("Close clicked");
+});
+
   </script>
 </body>
 

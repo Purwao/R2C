@@ -6,133 +6,135 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Code, Hydrate, Repeat</title>
   <style>
-   :root {
-    --background: transparent;
---bubble-bg: #26272b;
---text: #9fa2a7;
---highlight1: #56b273;
---highlight2: #b388dd;
---highlight3: #ff8750;
---highlight4: #01AD9B;
+    :root {
+      --background: transparent;
+      --bubble-bg: #26272b;
+      --text: #9fa2a7;
+      --highlight1: #56b273;
+      --highlight2: #b388dd;
+      --highlight3: #ff8750;
+      --highlight4: #01AD9B;
 
-}
+    }
 
-body {
-  overflow: hidden;
-  background-color: var(--background);
-  font-family: Arial, sans-serif;
-  color: var(--text);
-  margin: 0;
-  padding: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+    body {
+      overflow: hidden;
+      background-color: var(--background);
+      font-family: Arial, sans-serif;
+      color: var(--text);
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
 
-.container {
-  position: relative;
-  width: 100dvw;
-  display: flex;
-  justify-content: end;
-  align-items: center;
-  gap: 20px;
-}
+    .container {
+      position: relative;
+      width: 100dvw;
+      display: flex;
+      justify-content: end;
+      align-items: center;
+      gap: 20px;
+    }
 
-.speechbubble {
-  background-color: var(--bubble-bg);
-  color: var(--text);
-  padding: 20px;
-  border-radius: 12px;
-  position: relative;
-  max-width: 400px;
-  opacity: 0;
-  transform: translateX(300px);
-  transition: opacity 0.5s, transform 0.6s ease-out;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-}
+    .speechbubble {
+      background-color: var(--bubble-bg);
+      color: var(--text);
+      padding: 20px;
+      border-radius: 12px;
+      position: relative;
+      max-width: 400px;
+      opacity: 0;
+      transform: translateX(300px);
+      transition: opacity 0.5s, transform 0.6s ease-out;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
 
-.speechbubble.show {
-  opacity: 1;
-  transform: translateX(0);
-}
+    .speechbubble.show {
+      opacity: 1;
+      transform: translateX(0);
+    }
 
-.speechbubble::after {
-  content: '';
-  position: absolute;
-  left: -10px;
-  top: 30px;
-  border-width: 10px;
-  border-style: solid;
-  border-color: transparent var(--bubble-bg) transparent transparent;
-}
+    .speechbubble::after {
+      content: '';
+      position: absolute;
+      left: -10px;
+      top: 30px;
+      border-width: 10px;
+      border-style: solid;
+      border-color: transparent var(--bubble-bg) transparent transparent;
+    }
 
-.speechbubble:nth-child(4n+1) {
-  border-left: 5px solid var(--highlight1);
-}
-.speechbubble:nth-child(4n+2) {
-  border-left: 5px solid var(--highlight4);
-}
-.speechbubble:nth-child(4n+3) {
-  border-left: 5px solid var(--highlight2);
-}
-.speechbubble:nth-child(4n+4) {
-  border-left: 5px solid var(--highlight3);
-}
+    .speechbubble:nth-child(4n+1) {
+      border-left: 5px solid var(--highlight1);
+    }
 
-.username {
-  font-style: italic;
-  font-size: 0.9em;
-  color: #ccc;
-  margin-top: 8px;
-}
+    .speechbubble:nth-child(4n+2) {
+      border-left: 5px solid var(--highlight4);
+    }
 
-#breakTimeMessage {
-  font-size: 1rem;
-  line-height: 1.4;
-}
+    .speechbubble:nth-child(4n+3) {
+      border-left: 5px solid var(--highlight2);
+    }
 
-.close {
-  font-size: 1rem;
-  padding: 2px 8px;
-  border-radius: 4px;
-  cursor: pointer;
-  color: #ccc;
-  transition: background-color 0.2s;
-}
+    .speechbubble:nth-child(4n+4) {
+      border-left: 5px solid var(--highlight3);
+    }
 
-.close:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-}
+    .username {
+      font-style: italic;
+      font-size: 0.9em;
+      color: #ccc;
+      margin-top: 8px;
+    }
 
-.icon {
-  width: 100px;
-  height: 100px;
-  border-radius: 10px;
-  object-fit: cover;
-  flex-shrink: 0;
-  opacity: 0;
-  transform: translateX(300px);
-  transition: opacity 0.5s, transform 0.6s ease-out;
-}
+    #breakTimeMessage {
+      font-size: 1rem;
+      line-height: 1.4;
+    }
 
-.icon.show {
-  opacity: 1;
-  transform: translateX(0);
-}
+    .close {
+      font-size: 1rem;
+      padding: 2px 8px;
+      border-radius: 4px;
+      cursor: pointer;
+      color: #ccc;
+      transition: background-color 0.2s;
+    }
 
-.bottomdetail {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 10px;
-}
+    .close:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
 
-.bubble-container {
-  min-width: 50%;
-  display: flex;
-  flex-direction: column;
-}
+    .icon {
+      width: 100px;
+      height: 100px;
+      border-radius: 10px;
+      object-fit: cover;
+      flex-shrink: 0;
+      opacity: 0;
+      transform: translateX(300px);
+      transition: opacity 0.5s, transform 0.6s ease-out;
+    }
 
+    .icon.show {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .bottomdetail {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 10px;
+    }
+
+    .bubble-container {
+      min-width: 50%;
+      display: flex;
+      flex-direction: column;
+    }
   </style>
 </head>
 
@@ -158,10 +160,10 @@ body {
     const animeImage = document.getElementById('animeImage');
     const introSound = document.getElementById('introSound');
     const outroSound = document.getElementById('outroSound');
-  
+
     introSound.volume = 0.5;
     outroSound.volume = 0.1;
-  
+
     let messages = [
       "Hydration is key, now take a break. The bugs aren’t running away, but your brain needs a rest",
       "Feeling tired? No, it’s not burnout. You’re just thirsty. Drink up and conquer!",
@@ -177,17 +179,30 @@ body {
       "Every time you take a break, I want to be the first thing you think about",
       "You might code alone, but I’m here, waiting for you, yearning for your attention",
     ];
-  
+
     let imgdisplay = [];
     let isManuallyClosed = false;
-  
-    window.electronAPI.onCharacterData((data)=>{
-      console.log(data);
-      console.log(data.dialogues)
-      messages=data.dialogues;
-      document.getElementById('username').innerHTML=titleCase(data.name) + " ~";
+
+    let minutesInMs = 0;
+    let secondsInMs = 0;
+    let totalTimeInMs = 0;
+    let intervalId;
+
+    //fetching passed data from display
+    window.electronAPI.onCharacterData((data) => {
+      minutesInMs = parseInt(data.minutes, 10) * 60 * 1000;
+      secondsInMs = parseInt(data.seconds, 10) * 1000;
+      totalTimeInMs = minutesInMs + secondsInMs + 10000;
+      messages = data.dialogues;
+
+      console.log(totalTimeInMs);
+
+      document.getElementById('username').innerHTML = titleCase(data.name) + " ~";
+
+      startMessageLoop();
     })
 
+    //getting all the images path
     window.addEventListener('DOMContentLoaded', () => {
       // Load image paths from preload
       if (window.electronAPI?.getImages) {
@@ -201,34 +216,43 @@ body {
       } else {
         console.error("electronAPI.getImages is not defined");
       }
-  
-      // Start automatic bubble timer after DOM + images are ready
-      setInterval(showMessage, 20000);
     });
-  
+
+    //loops chatbubbs forever with dedicated timer.
+    function startMessageLoop() {
+      function loop() {
+        showMessage(); 
+        intervalId = setTimeout(loop, totalTimeInMs); 
+      }
+      // Clear any previous loop before starting a new one
+      if (intervalId) clearTimeout(intervalId);
+      loop();
+    }
+
+    //title case for characters naming
     function titleCase(str) {
-   var splitStr = str.toLowerCase().split(' ');
-   for (var i = 0; i < splitStr.length; i++) {
-      
-       splitStr[i] = splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);     
-   }
+      var splitStr = str.toLowerCase().split(' ');
+      for (var i = 0; i < splitStr.length; i++) {
 
-   return splitStr.join(' '); 
-}
+        splitStr[i] = splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);
+      }
+      return splitStr.join(' ');
+    }
 
+    //chatbubble border
     function getRightEdgeColor(imgElement, callback) {
       const canvas = document.createElement("canvas");
       const ctx = canvas.getContext("2d");
-  
+
       canvas.width = imgElement.naturalWidth;
       canvas.height = imgElement.naturalHeight;
-  
+
       ctx.drawImage(imgElement, 0, 0, canvas.width, canvas.height);
-  
+
       const stripWidth = 5;
       const imageData = ctx.getImageData(canvas.width - stripWidth, 0, stripWidth, canvas.height);
       const data = imageData.data;
-  
+
       let r = 0, g = 0, b = 0, count = 0;
       for (let i = 0; i < data.length; i += 4) {
         r += data[i];
@@ -236,82 +260,87 @@ body {
         b += data[i + 2];
         count++;
       }
-  
+
       r = Math.round(r / count);
       g = Math.round(g / count);
       b = Math.round(b / count);
-  
+
       callback(`rgb(${r}, ${g}, ${b})`);
     }
-  
+
+    //showing chat bubbs
     function showMessage() {
       isManuallyClosed = false;
-  
-      // Electron API safety check
+
+      // Electron API safety cek
       if (window.electronAPI?.setMouseThrough) {
         window.electronAPI.setMouseThrough(false);
       }
-  
+
       const randomImgIndex = Math.floor(Math.random() * imgdisplay.length);
-      const imgPath = imgdisplay[randomImgIndex] || ''; // fallback if empty
-  
+      const imgPath = imgdisplay[randomImgIndex] || '';
+
       animeImage.src = imgPath;
       animeImage.alt = imgPath;
-  
+
       const randomIndex = Math.floor(Math.random() * messages.length);
-      breakTimeMessage.textContent = `"`+messages[randomIndex]+`"`;
+      breakTimeMessage.textContent = `"` + messages[randomIndex] + `"`;
       bubble.classList.add('show');
-  
+
+      //border chatbubbs
       animeImage.onload = () => {
         getRightEdgeColor(animeImage, (color) => {
           bubble.style.borderLeft = `5px solid ${color}`;
         });
       };
-  
+
+      //shows chatbubbs and sounds
       animeImage.classList.add('show');
       introSound.play();
-  
+
+      //only lasts for 10s for now...
       setTimeout(() => {
         if (!isManuallyClosed) {
           introSound.pause();
           introSound.currentTime = 0;
-  
+
           outroSound.pause();
           outroSound.currentTime = 0;
           outroSound.play();
-  
+
           bubble.classList.remove('show');
           animeImage.classList.remove('show');
-  
+
           if (window.electronAPI?.setMouseThrough) {
             window.electronAPI.setMouseThrough(true);
           }
         }
       }, 10000);
     }
-  
+
+    //closing chat bubbs
     closeBubble.addEventListener('click', () => {
       isManuallyClosed = true;
-  
+
       introSound.pause();
       introSound.currentTime = 0;
-  
+
       outroSound.pause();
       outroSound.currentTime = 0;
       outroSound.play();
-  
+
       bubble.classList.remove('show');
       animeImage.classList.remove('show');
-  
+
       if (window.electronAPI?.setMouseThrough) {
         window.electronAPI.setMouseThrough(true);
       }
     });
 
-    console.log("electronAPI:", window.electronAPI);
+    // console.log("electronAPI:", window.electronAPI);
 
   </script>
-  
+
 </body>
 
 </html>

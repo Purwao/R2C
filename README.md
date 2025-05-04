@@ -1,308 +1,150 @@
-
-<div align="center">
-
-  <img src="assets/logo.png" alt="logo" width="200" height="auto" />
-  <h1>Awesome Readme Template</h1>
-  
-  <p>
-    An awesome README template for your projects! 
-  </p>
-  
-  
-<!-- Badges -->
-<p>
-  <a href="https://github.com/Louis3797/awesome-readme-template/graphs/contributors">
-    <img src="https://img.shields.io/github/contributors/Louis3797/awesome-readme-template" alt="contributors" />
-  </a>
-  <a href="">
-    <img src="https://img.shields.io/github/last-commit/Louis3797/awesome-readme-template" alt="last update" />
-  </a>
-  <a href="https://github.com/Louis3797/awesome-readme-template/network/members">
-    <img src="https://img.shields.io/github/forks/Louis3797/awesome-readme-template" alt="forks" />
-  </a>
-  <a href="https://github.com/Louis3797/awesome-readme-template/stargazers">
-    <img src="https://img.shields.io/github/stars/Louis3797/awesome-readme-template" alt="stars" />
-  </a>
-  <a href="https://github.com/Louis3797/awesome-readme-template/issues/">
-    <img src="https://img.shields.io/github/issues/Louis3797/awesome-readme-template" alt="open issues" />
-  </a>
-  <a href="https://github.com/Louis3797/awesome-readme-template/blob/master/LICENSE">
-    <img src="https://img.shields.io/github/license/Louis3797/awesome-readme-template.svg" alt="license" />
-  </a>
+<p align="center">
+  <img src="storage/assets/desktopicon.jpeg" width="200" alt="R2C Logo"><br>
+<br>
+  <span style="font-size: 1.2em;">👋 Welcome to <strong>R2C</strong> 🚀</span>
 </p>
-   
-<h4>
-    <a href="https://github.com/Louis3797/awesome-readme-template/">View Demo</a>
-  <span> · </span>
-    <a href="https://github.com/Louis3797/awesome-readme-template">Documentation</a>
-  <span> · </span>
-    <a href="https://github.com/Louis3797/awesome-readme-template/issues/">Report Bug</a>
-  <span> · </span>
-    <a href="https://github.com/Louis3797/awesome-readme-template/issues/">Request Feature</a>
-  </h4>
-</div>
 
-<br />
+---
 
-<!-- Table of Contents -->
-# :notebook_with_decorative_cover: Table of Contents
+> 🧠 A desktop companion app built with <strong>Electron</strong> that brings characters to life on your desktop through dialogue and engaging visuals.
 
-- [About the Project](#star2-about-the-project)
-  * [Screenshots](#camera-screenshots)
-  * [Tech Stack](#space_invader-tech-stack)
-  * [Features](#dart-features)
-  * [Color Reference](#art-color-reference)
-  * [Environment Variables](#key-environment-variables)
-- [Getting Started](#toolbox-getting-started)
-  * [Prerequisites](#bangbang-prerequisites)
-  * [Installation](#gear-installation)
-  * [Running Tests](#test_tube-running-tests)
-  * [Run Locally](#running-run-locally)
-  * [Deployment](#triangular_flag_on_post-deployment)
-- [Usage](#eyes-usage)
-- [Roadmap](#compass-roadmap)
-- [Contributing](#wave-contributing)
-  * [Code of Conduct](#scroll-code-of-conduct)
-- [FAQ](#grey_question-faq)
-- [License](#warning-license)
-- [Contact](#handshake-contact)
-- [Acknowledgements](#gem-acknowledgements)
+<p align="center">
+  <a href="#demo">🔹 View Demo</a> &nbsp;·&nbsp;
+  <a href="#bug">🐞 Report Bug</a> &nbsp;·&nbsp;
+  <a href="#feature">💡 Request Feature</a>
+</p>
+<br>
 
-  
+## 📚 Table of Contents
 
-<!-- About the Project -->
-## :star2: About the Project
+- [👋 Introduction](#-introduction)
+- [🖼️ Features](#-features)
+- [🛠️ Installation](#️-installation)
+- [🎮 Usage](#-usage)
+- [🧩 Demo](#-demo)
+- [🗺️ Roadmap](#️-roadmap)
+- [📄 License](#-license)
+<br>
+<br>
+
+## 👋 Introduction
+
+**R2C** is my very first project that I’ve ever officially published — and I couldn't be more excited to share it with the world! 🎉
+
+Built with 💻 **Electron**, this desktop companion app is more than just a code experiment. It's a personal milestone, representing the transition from tinkering with ideas to actually launching something real and usable. Whether you're a developer curious about desktop apps or someone who just enjoys digital companions, **R2C** was made with heart, a lot of learning, and plenty of late-night debugging sessions. 🌙
+
+While it's not perfect, I’m proud to finally share it. I hope this project of mine brings you at least a of personality and fun going through your desktop! just like it did to mine! 
 
 
-<!-- Screenshots -->
-### :camera: Screenshots
 
-<div align="center"> 
-  <img src="https://placehold.co/600x400?text=Your+Screenshot+here" alt="screenshot" />
-</div>
+## 🧸 Features
 
+- 🧍 Customizeable Characters — Add a name, timer, and dialogues to personalize your companion.
 
-<!-- TechStack -->
-### :space_invader: Tech Stack
+- 💬 Dynamic Dialogue Display — Characters speak at set intervals with stylized popups.
 
-<details>
-  <summary>Client</summary>
-  <ul>
-    <li><a href="https://www.typescriptlang.org/">Typescript</a></li>
-    <li><a href="https://nextjs.org/">Next.js</a></li>
-    <li><a href="https://reactjs.org/">React.js</a></li>
-    <li><a href="https://tailwindcss.com/">TailwindCSS</a></li>
-  </ul>
-</details>
+- 🖼️ Optional Visuals — Upload image assets to make your character visually come alive.
 
-<details>
-  <summary>Server</summary>
-  <ul>
-    <li><a href="https://www.typescriptlang.org/">Typescript</a></li>
-    <li><a href="https://expressjs.com/">Express.js</a></li>
-    <li><a href="https://go.dev/">Golang</a></li>
-    <li><a href="https://nestjs.com/">Nest.js</a></li>
-    <li><a href="https://socket.io/">SocketIO</a></li>
-    <li><a href="https://www.prisma.io/">Prisma</a></li>    
-    <li><a href="https://www.apollographql.com/">Apollo</a></li>
-    <li><a href="https://graphql.org/">GraphQL</a></li>
-  </ul>
-</details>
+- 💻 Desktop Integration — Lightweight and always-on-top windows, perfect for background interaction.
 
-<details>
-<summary>Database</summary>
-  <ul>
-    <li><a href="https://www.mysql.com/">MySQL</a></li>
-    <li><a href="https://www.postgresql.org/">PostgreSQL</a></li>
-    <li><a href="https://redis.io/">Redis</a></li>
-    <li><a href="https://neo4j.com/">Neo4j</a></li>
-    <li><a href="https://www.mongodb.com/">MongoDB</a></li>
-  </ul>
-</details>
+- 🔁 Looping continuously — it gives off the feel of a reactive presence.
 
-<details>
-<summary>DevOps</summary>
-  <ul>
-    <li><a href="https://www.docker.com/">Docker</a></li>
-    <li><a href="https://www.jenkins.io/">Jenkins</a></li>
-    <li><a href="https://circleci.com/">CircleCLI</a></li>
-  </ul>
-</details>
+## 🛠️ Installation
 
-<!-- Features -->
-### :dart: Features
+📦 **Download Prebuilt**
 
-- Feature 1
-- Feature 2
-- Feature 3
+> Feeling troubled downloading VS Code and whatnot? Don't worry! Just download the app!
 
-<!-- Color Reference -->
-### :art: Color Reference
+- 🔗 [Download R2C for Windows (.exe)](https://github.com/Purwao/R2C/releases/tag/v1.3.2)
+  *(macOS/Linux support not available yet)*
 
-| Color             | Hex                                                                |
-| ----------------- | ------------------------------------------------------------------ |
-| Primary Color | ![#222831](https://via.placeholder.com/10/222831?text=+) #222831 |
-| Secondary Color | ![#393E46](https://via.placeholder.com/10/393E46?text=+) #393E46 |
-| Accent Color | ![#00ADB5](https://via.placeholder.com/10/00ADB5?text=+) #00ADB5 |
-| Text Color | ![#EEEEEE](https://via.placeholder.com/10/EEEEEE?text=+) #EEEEEE |
+🧑‍💻 Or Run From Source (For Devs)
+
+If you're another devs and want to play with the source:
 
 
-<!-- Env Variables -->
-### :key: Environment Variables
-
-To run this project, you will need to add the following environment variables to your .env file
-
-`API_KEY`
-
-`ANOTHER_API_KEY`
-
-<!-- Getting Started -->
-## 	:toolbox: Getting Started
-
-<!-- Prerequisites -->
-### :bangbang: Prerequisites
-
-This project uses Yarn as package manager
-
-```bash
- npm install --global yarn
-```
-
-<!-- Installation -->
-### :gear: Installation
-
-Install my-project with npm
-
-```bash
-  yarn install my-project
-  cd my-project
-```
-   
-<!-- Running Tests -->
-### :test_tube: Running Tests
-
-To run tests, run the following command
-
-```bash
-  yarn test test
-```
-
-<!-- Run Locally -->
-### :running: Run Locally
 
 Clone the project
-
 ```bash
-  git clone https://github.com/Louis3797/awesome-readme-template.git
-```
-
-Go to the project directory
-
-```bash
-  cd my-project
+git clone https://github.com/Purwao/R2C.git
 ```
 
 Install dependencies
-
 ```bash
-  yarn install
+npm install
 ```
 
-Start the server
 
+To run tests, run the following command
 ```bash
-  yarn start
+npx electron .
 ```
 
+## 🎮 Usage
 
-<!-- Deployment -->
-### :triangular_flag_on_post: Deployment
+Getting started with **R2C** is simple! Follow these steps to bring your desktop companion to life:
 
-To deploy this project run
+1. **Launch the App**  
+   Open the R2C executable — no installation or setup required.
 
-```bash
-  yarn deploy
-```
+2. **Fill in the Character Info**
+   - 🏷️ **Character Name**: Give your companion a name.
+   - 💬 **Dialogues**: Write one dialogue per line. These lines will appear randomly on a loop.
+   - ⏱️ **Timer**: Set how frequently your character speaks (in minutes and seconds).
+   - 🖼️ **Upload Image** (optional): Add a visual to give your character a face.
 
+   > ⚙️ *Note: The character setup form is still pretty basic — improvements to layout and UX are planned in future updates!*
 
-<!-- Usage -->
-## :eyes: Usage
+3. **Click Submit**  
+   Your character will appear on-screen, chatting at regular intervals.
 
-Use this space to tell a little more about your project and how it can be used. Show additional screenshots, code samples, demos or link to other resources.
+> 💡 **Tip**: You can create multiple companions btw — just repeat the process with different settings for each one!
 
+## 🧩 Demo
 
-```javascript
-import Component from 'my-project'
+Here’s how it works in action:
+<p align="center">
+<img src="storage/assets/charactersetup.png" width="500" alt="Character Setup UI" >  
+<img src="storage/assets/dialogue.png" width="500" alt="Live Dialogue Preview" >
+</p>
+> 🧪 *The UI is still evolving! Do expect cleaner visuals and better customization options in future versions.*
 
-function App() {
-  return <Component />
-}
-```
+## 🗺️ Roadmap
 
-<!-- Roadmap -->
-## :compass: Roadmap
+Here are some planned improvements and future features for **R2C**:
 
-* [x] Todo 1
-* [ ] Todo 2
+- [ ] 🧼 **UI/UX Enhancements**  
+  Improve the character setup form for a more intuitive experience (e.g., field grouping, better spacing, saving data, positioning, etc).
 
+- [ ] 🧠 **Dialogue Variations**  
+  Support for time-based or generated dialogues (e.g., "morning quotes", "random jokes", etc).
 
-<!-- Contributing -->
-## :wave: Contributing
+- [ ] 🧩 **Character Profiles**  
+  Save and load different characters with unique settings and visuals.
 
-<a href="https://github.com/Louis3797/awesome-readme-template/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=Louis3797/awesome-readme-template" />
-</a>
+- [ ] 🌐 **Cross-Platform Support**  
+  Add downloadable builds for macOS and Linux. Do not expect in the near future.
 
+- [ ] ⚙️ **Settings Menu**  
+  Global settings like window opacity, position locking, and startup behavior.
 
-Contributions are always welcome!
-
-See `contributing.md` for ways to get started.
-
-
-<!-- Code of Conduct -->
-### :scroll: Code of Conduct
-
-Please read the [Code of Conduct](https://example.com)
-
-<!-- FAQ -->
-## :grey_question: FAQ
-
-- Question 1
-
-  + Answer 1
-
-- Question 2
-
-  + Answer 2
+- [ ] 💬 **Speech Effects**  
+  Add typing animations or optional voice playback (TTS).
 
 
-<!-- License -->
-## :warning: License
 
-Distributed under the no License. See LICENSE.txt for more information.
+> ✅ Have suggestions? Feel free to open a [Feature Request] or [Issue]!
 
+## ⚖️ License
 
-<!-- Contact -->
-## :handshake: Contact
+This project is licensed under the [MIT License](./LICENSE).
 
-Your Name - [@twitter_handle](https://twitter.com/twitter_handle) - email@email_client.com
+Feel free to use, modify, and distribute it — just be sure to include the original license.  
+No warranties are provided. Use at your own risk.
 
-Project Link: [https://github.com/Louis3797/awesome-readme-template](https://github.com/Louis3797/awesome-readme-template)
+© 2025 [Purwao]
 
-
-<!-- Acknowledgments -->
-## :gem: Acknowledgements
-
-Use this section to mention useful resources and libraries that you have used in your projects.
-
- - [Shields.io](https://shields.io/)
- - [Awesome README](https://github.com/matiassingers/awesome-readme)
- - [Emoji Cheat Sheet](https://github.com/ikatyang/emoji-cheat-sheet/blob/master/README.md#travel--places)
- - [Readme Template](https://github.com/othneildrew/Best-README-Template)
-
-
-tambahin audio kata bang rafli(ty for the readme template btw)
-still go no time for readmemd
-
-log:
-v1.3.1: i add dynamic input for name and dialogues
+### ✍️ Author
+Developed with 💻 and ❤️ by **[Purwa]**  
+🔗 [Your GitHub](https://github.com/Purwao)  
+📧 Contact: purwaarda51@example.com

@@ -7,6 +7,7 @@ let displayWindow;
 
 let characterData = null;
 
+//handling display's submits
 ipcMain.handle('submit-character-data', async (event, data) => {
   characterData = data;
 
@@ -60,12 +61,12 @@ ipcMain.on('set-ignore-mouse-events', (event, ignore) => {
   }
 });
 
-//logic for minimize
+//veri veri veri hard logic for minimize
 ipcMain.on('minimize-window', () => {
   displayWindow.minimize();
 });
 
-//logic for close
+//veri veri ez logic for close
 ipcMain.on('close-window', () => {
   displayWindow.close();
 });
@@ -91,7 +92,7 @@ function createDisplayWindow() {
   });
   displayWindow.loadFile('display.html')
   
-  displayWindow.webContents.openDevTools({ mode: 'detach' });
+  // displayWindow.webContents.openDevTools({ mode: 'detach' });
   
   displayWindow.show();
 }
@@ -123,7 +124,7 @@ function createMainWindow() {
     mainWindow.setIgnoreMouseEvents(true, { forward: true });
   });
 
-  mainWindow.webContents.openDevTools({ mode: 'detach' });
+  // mainWindow.webContents.openDevTools({ mode: 'detach' });
 }
 
 app.on('ready', () => {
